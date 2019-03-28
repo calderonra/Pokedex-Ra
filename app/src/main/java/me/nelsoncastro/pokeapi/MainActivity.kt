@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     fun initRecycler(pokemon: MutableList<Pokemon>){
         viewManager = LinearLayoutManager(this)
-        viewAdapter = PokemonAdapter(pokemon)
+        viewAdapter = PokemonAdapter(this ,pokemon)
 
         rv_pokemon_list.apply {
             setHasFixedSize(true)
@@ -86,6 +86,7 @@ class MainActivity : AppCompatActivity() {
             initRecycler(pokemon)
         }
     }
+
     private inner class QueryPokemonTask : AsyncTask<String, Void, String>() {
 
         override fun doInBackground(vararg query: String): String {
