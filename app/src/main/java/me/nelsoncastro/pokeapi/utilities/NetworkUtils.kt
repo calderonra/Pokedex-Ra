@@ -12,13 +12,14 @@ import java.util.*
 class NetworkUtils {
     val POKEMON_API_BASE_URL = "https://pokeapi.co/api/v2/"
     val POKEMON_INFO = "pokemon"
+    val POKEMON_TYPE = "type"
 
     private val TAG = NetworkUtils::class.java.simpleName
 
-    fun buildUrl(pokeID: String): URL {
+    fun buildUrl(root: String, pokeID: String): URL {
         val builtUri = Uri.parse(POKEMON_API_BASE_URL)
             .buildUpon()
-            .appendPath(POKEMON_INFO)
+            .appendPath(root)
             .appendPath(pokeID)
             .build()
 
