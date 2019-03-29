@@ -1,8 +1,5 @@
 package me.nelsoncastro.pokeapi
 
-import android.content.Context
-import android.content.Intent
-import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -26,7 +23,7 @@ class PokemonAdapter(val items: List<Pokemon>, val clickListener: (Pokemon) -> U
         fun bind(item: Pokemon, clickListener: (Pokemon) -> Unit) = with(itemView) {
             tv_pokemon_id.text = item.id.toString()
             tv_pokemon_name.text = item.name
-            tv_pokemon_type.text = item.type
+            tv_pokemon_type.text = item.url
             this.setOnClickListener { clickListener(item) }
         }
     }

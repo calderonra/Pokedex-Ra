@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun pokemonItemClicked(item: Pokemon){
-        startActivity(Intent(this, PokemonViewer::class.java).putExtra("CLAVIER", item.type))
+        startActivity(Intent(this, PokemonViewer::class.java).putExtra("CLAVIER", item.url))
     }
 
     private inner class FetchPokemonTask : AsyncTask<String, Void, String>() {
@@ -81,11 +81,11 @@ class MainActivity : AppCompatActivity() {
                 val results = root.getJSONArray("results")
                 MutableList(20) { i ->
                     val result = JSONObject(results[i].toString())
-                    Pokemon(i, result.getString("name").capitalize(), result.getString("url"))
+                    Pokemon(i, result.getString("name").capitalize(), R.string.n_a_value.toString(), R.string.n_a_value.toString(), R.string.n_a_value.toString(), R.string.n_a_value.toString(), result.getString("url"), R.string.n_a_value.toString())
                 }
             } else {
                 MutableList(20) { i ->
-                    Pokemon(i, R.string.n_a_value.toString(), R.string.n_a_value.toString())
+                    Pokemon(i, R.string.n_a_value.toString(), R.string.n_a_value.toString(), R.string.n_a_value.toString(),R.string.n_a_value.toString(), R.string.n_a_value.toString(), R.string.n_a_value.toString(), R.string.n_a_value.toString())
                 }
             }
             initRecycler(pokemon)
@@ -118,11 +118,11 @@ class MainActivity : AppCompatActivity() {
                     val resulty = JSONObject(results[i].toString())
                     val result = JSONObject(resulty.getString("pokemon"))
 
-                    Pokemon(i, result.getString("name").capitalize(), result.getString("url"))
+                    Pokemon(i, result.getString("name").capitalize(), R.string.n_a_value.toString(), R.string.n_a_value.toString(), R.string.n_a_value.toString(), R.string.n_a_value.toString(), result.getString("url"), R.string.n_a_value.toString())
                 }
             } else {
                 MutableList(20) { i ->
-                    Pokemon(i, R.string.n_a_value.toString(), R.string.n_a_value.toString())
+                    Pokemon(i, R.string.n_a_value.toString(), R.string.n_a_value.toString(), R.string.n_a_value.toString(),R.string.n_a_value.toString(), R.string.n_a_value.toString(), R.string.n_a_value.toString(), R.string.n_a_value.toString())
                 }
             }
             initRecycler(pokemon)
