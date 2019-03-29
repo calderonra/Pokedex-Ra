@@ -81,7 +81,14 @@ class MainActivity : AppCompatActivity() {
                 val results = root.getJSONArray("results")
                 MutableList(20) { i ->
                     val result = JSONObject(results[i].toString())
-                    Pokemon(i, result.getString("name").capitalize(), R.string.n_a_value.toString(), R.string.n_a_value.toString(), R.string.n_a_value.toString(), R.string.n_a_value.toString(), result.getString("url"), R.string.n_a_value.toString())
+                    Pokemon(i,
+                        result.getString("name").capitalize(),
+                        R.string.n_a_value.toString(),
+                        R.string.n_a_value.toString(),
+                        R.string.n_a_value.toString(),
+                        R.string.n_a_value.toString(),
+                        result.getString("url"),
+                        R.string.n_a_value.toString())
                 }
             } else {
                 MutableList(20) { i ->
@@ -118,7 +125,14 @@ class MainActivity : AppCompatActivity() {
                     val resulty = JSONObject(results[i].toString())
                     val result = JSONObject(resulty.getString("pokemon"))
 
-                    Pokemon(i, result.getString("name").capitalize(), R.string.n_a_value.toString(), R.string.n_a_value.toString(), R.string.n_a_value.toString(), R.string.n_a_value.toString(), result.getString("url"), R.string.n_a_value.toString())
+                    Pokemon(i,
+                        result.getString("name").capitalize(),
+                        R.string.n_a_value.toString(),
+                        R.string.n_a_value.toString(),
+                        R.string.n_a_value.toString(),
+                        R.string.n_a_value.toString(),
+                        result.getString("url"),
+                        R.string.n_a_value.toString())
                 }
             } else {
                 MutableList(20) { i ->

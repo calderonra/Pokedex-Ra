@@ -80,12 +80,14 @@ class PokemonViewer : AppCompatActivity() {
                 val sprites = root.getString("sprites")
                 val types = root.getJSONArray("types")
                 val fsttype = JSONObject(types[0].toString()).getString("type")
-                val sndtype = try {
-                    JSONObject(types[1].toString()).getString("type")
-                }catch (e: JSONException){
-                    ""
-                }
-                Pokemon(root.getInt("id"), root.getString("name").capitalize(), JSONObject(fsttype).getString("name").capitalize(), if(sndtype.isEmpty()) " " else JSONObject(sndtype).getString("name").capitalize() , root.getString("weight"), root.getString("height"), root.getString("location_area_encounters"), JSONObject(sprites).getString("front_default"))
+                val sndtype = try { JSONObject(types[1].toString()).getString("type") }catch (e: JSONException){ "" }
+
+                Pokemon(root.getInt("id"),
+                    root.getString("name").capitalize(),
+                    JSONObject(fsttype).getString("name").capitalize(),
+                    if(sndtype.isEmpty()) " " else JSONObject(sndtype).getString("name").capitalize(),
+                    root.getString("weight"), root.getString("height"), root.getString("location_area_encounters"),
+                    JSONObject(sprites).getString("front_default"))
 
             } else {
                 Pokemon(0, R.string.n_a_value.toString(), R.string.n_a_value.toString(), R.string.n_a_value.toString(),R.string.n_a_value.toString(), R.string.n_a_value.toString(), R.string.n_a_value.toString(), R.string.n_a_value.toString())
