@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.list_element_pokemon.view.*
 import me.nelsoncastro.pokeapi.models.Pokemon
 
-class PokemonAdapter(val contexte: Context, val items: List<Pokemon>):RecyclerView.Adapter<PokemonAdapter.ViewHolder>() {
+class PokemonAdapter(val items: List<Pokemon>, val clickListener: (Pokemon) -> Unit):RecyclerView.Adapter<PokemonAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_element_pokemon, parent, false)
@@ -19,21 +19,15 @@ class PokemonAdapter(val contexte: Context, val items: List<Pokemon>):RecyclerVi
 
     override fun getItemCount() = items.size
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position])
-        holder.cardviewlistener.setOnClickListener {
-            contexte.startActivity(Intent(contexte, PokemonViewer::class.java).putExtra("CLAVIER", items[position].type))
-        }
-    }
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(items[position], clickListener)
+
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        val cardviewlistener = with(itemView){ cardview }
-        //val cardviewlistener = findViewById(R.id.cardview)
-
-        fun bind(item: Pokemon) = with(itemView) {
+        fun bind(item: Pokemon, clickListener: (Pokemon) -> Unit) = with(itemView) {
             tv_pokemon_id.text = item.id.toString()
             tv_pokemon_name.text = item.name
             tv_pokemon_type.text = item.type
+            this.setOnClickListener { clickListener(item) }
         }
     }
 }

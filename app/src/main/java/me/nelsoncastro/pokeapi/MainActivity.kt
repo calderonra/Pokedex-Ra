@@ -1,5 +1,6 @@
 package me.nelsoncastro.pokeapi
 
+import android.content.Intent
 import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
     fun initRecycler(pokemon: MutableList<Pokemon>){
         viewManager = LinearLayoutManager(this)
-        viewAdapter = PokemonAdapter(this ,pokemon)
+        viewAdapter = PokemonAdapter(pokemon, {pokemonItem: Pokemon -> pokemonItemClicked(pokemonItem)})
 
         rv_pokemon_list.apply {
             setHasFixedSize(true)
@@ -50,6 +51,10 @@ class MainActivity : AppCompatActivity() {
             searchbar.setText("")
             FetchPokemonTask().execute("")
         }
+    }
+
+    private fun pokemonItemClicked(item: Pokemon){
+        startActivity(Intent(this, PokemonViewer::class.java).putExtra("CLAVIER", item.type))
     }
 
     private inner class FetchPokemonTask : AsyncTask<String, Void, String>() {
