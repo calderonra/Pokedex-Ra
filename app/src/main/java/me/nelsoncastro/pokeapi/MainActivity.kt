@@ -19,6 +19,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewAdapter: PokemonAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
 
+    private var pokemonList: ArrayList<Pokemon> = ArrayList()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -27,9 +30,16 @@ class MainActivity : AppCompatActivity() {
         clearSearchPokemon()
     }
 
+    fun addPokemonList(pokemon: Pokemon){
+        pokemonList.add(pokemon)
+        viewAdapter.changeList(pokemonList)
+        Log.d("Number",pokemonList.size.toString())
+
+    }
+
     fun initRecycler(pokemon: MutableList<Pokemon>){
         viewManager = LinearLayoutManager(this)
-        viewAdapter = PokemonAdapter(pokemon, {pokemonItem: Pokemon -> pokemonItemClicked(pokemonItem)})
+        viewAdapter = PokemonAdapter(pokemonList, {pokemonItem: Pokemon -> pokemonItemClicked(pokemonItem)})
 
         rv_pokemon_list.apply {
             setHasFixedSize(true)
