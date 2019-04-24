@@ -12,6 +12,8 @@ import me.nelsoncastro.pokeapi.models.Pokemon
 import me.nelsoncastro.pokeapi.utilities.NetworkUtils
 import org.json.JSONObject
 import java.io.IOException
+import com.google.gson.Gson
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -27,6 +29,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         FetchPokemonTask().execute("")
         searchPokemon()
+
+        initRecycler()
         clearSearchPokemon()
     }
 
@@ -37,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun initRecycler(pokemon: MutableList<Pokemon>){
+    fun initRecycler(){
         viewManager = LinearLayoutManager(this)
         viewAdapter = PokemonAdapter(pokemonList, {pokemonItem: Pokemon -> pokemonItemClicked(pokemonItem)})
 
@@ -46,6 +50,13 @@ class MainActivity : AppCompatActivity() {
             layoutManager = viewManager
             adapter = viewAdapter
         }
+    }
+
+    private fun pokemonItemCliked(item: Pokemon){
+        val pokeBundle = Bundle()
+        pokeBundle.putParcelable("POKEMON",item)
+        startActivity(Intent(this, PokemonViewer::class.java).putExtras(pokeBundle))
+
     }
 
     private fun searchPokemon(){
@@ -87,7 +98,13 @@ class MainActivity : AppCompatActivity() {
 
         override fun onPostExecute(pokemonInfo: String) {
             val pokemon = if (!pokemonInfo.isEmpty()) {
+
+
                 val root = JSONObject(pokemonInfo)
+                if (root.getString("Response")=="True"){
+                    val poke = Gson().fromJson<Pokemon>(pokemonInfo,Pokemon::class.java)
+                    addPokemonList(poke)
+                }
                 val results = root.getJSONArray("results")
                 MutableList(20) { i ->
                     val result = JSONObject(results[i].toString())
@@ -105,7 +122,7 @@ class MainActivity : AppCompatActivity() {
                     Pokemon(i, R.string.n_a_value.toString(), R.string.n_a_value.toString(), R.string.n_a_value.toString(),R.string.n_a_value.toString(), R.string.n_a_value.toString(), R.string.n_a_value.toString(), R.string.n_a_value.toString())
                 }
             }
-            initRecycler(pokemon)
+
         }
     }
 
@@ -149,7 +166,6 @@ class MainActivity : AppCompatActivity() {
                     Pokemon(i, R.string.n_a_value.toString(), R.string.n_a_value.toString(), R.string.n_a_value.toString(),R.string.n_a_value.toString(), R.string.n_a_value.toString(), R.string.n_a_value.toString(), R.string.n_a_value.toString())
                 }
             }
-            initRecycler(pokemon)
         }
     }
 }
